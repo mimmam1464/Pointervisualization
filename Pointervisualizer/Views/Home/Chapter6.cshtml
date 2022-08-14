@@ -1,0 +1,92 @@
+﻿@using System.Web.UI.WebControls
+
+@Styles.Render("~/TemplateData/style.css")
+@Scripts.Render("~/Scripts/Build/UnityLoader.js")
+@Scripts.Render("~/TemplateData/UnityProgress.js")
+
+@{
+    ViewBag.Title = "Lesson 6: Multidimensional Arrays";
+}
+
+<h2>Lesson 6: Multidimensional Arrays and Pointers</h2>
+
+<script>
+    var unityInstance = UnityLoader.instantiate("unityContainer", "@Url.Content("~/Scripts/CH6Build/CH6.json")", { onProgress: UnityProgress });
+</script>
+
+<div class="container-fluid">
+
+    <p style="max-width: 960px">
+        So far, we have looked at arrays that hold variables such as ints or chars. However, you can have an array of various types of data such as objects
+        or even other arrays. These arrays containing other arrays are called multidimensional arrays. We can initialize a multidimensional array as follows:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">int myArray[2][3] = {1, 2, 3, 4, 5, 6};</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px"> This is a 2D array with 2 rows and 3 columns. In tabular form, it looks like: </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors"> {1, 2, 3}</li>
+            <li class="bulletColors"> {4, 5, 6}</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        This concept of arrays storing arrays extends to pointers pointing to other pointers, creating multidimensional pointers. For example:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors"> int var1 = 10; </li>
+            <li class="bulletColors"> int * ptr1 = &var1; </li>
+            <li class="bulletColors"> int ** ptr2 = &ptr1;</li>
+
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        Just as we would access <b>var1</b> by dereferencing <b>ptr1</b>, we would access <b>ptr1</b> by dereferencing <b>ptr2</b>. Additionally,
+        <b>ptr2</b> can be double derefenced to access <b>var1</b>. This applies to any number of pointer to pointers: triple derefence for a third
+        pointer to <b>ptr2</b> and a quadriple dereference for a pointer to that pointer and so on.
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors"> cout << *ptr1; <i>//Would print out the value of var1 which is 10.</i> </li>
+            <li class="bulletColors"> cout << *ptr2; <i>//Would print out the address of ptr1.</i> </li>
+            <li class="bulletColors"> cout << **ptr2; <i>//Would also print out the value of var1.</i> </li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        In terms of arrays, you can think of the first dereference of a double pointer as an access to the row, while the second dereference accesses
+        the column. For example, let's say that we had a double pointer <b>myArrayPointer</b> storing the same values as <b>myArray</b>. The array 
+        operations would correspond to the pointer operations as follows:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors"> myArray[0];      <i>//References the address of the first row of myArray.</i> </li>
+            <li class="bulletColors"> *myArrayPointer; <i>//References the address of the first row of myArrayPointer.</i> </li>
+            <li class="bulletColors"> myArray[1];      <i>//References the address of the second row of myArray.</i> </li>
+            <li class="bulletColors"> *(myArrayPointer + 1);    <i>//References the address of the second row of myArrayPointer.</i> </li>
+            <li class="bulletColors"> myArray[1][1];            <i>//References the address of the second row and second column of myArray.</i> </li>
+            <li class="bulletColors"> *(myArrayPointer + 1)[1]; <i>//References the address of the second row and second column of myArrayPointer.</i> </li>
+        </b>
+    </ul>
+
+    <!--Unity Starts-->
+    <div id="unityContainer" style="background-color: red;">Hello</div>
+    <br/>
+    <div class="footer">
+        <div class="title">Introduction to Pointers and Addressing</div>
+        <input type="button" value="⛶" onclick="unityInstance.SetFullscreen(1)" class="btn btn-sm btn-default" />
+        @Html.ActionLink("NEXT","Chapter7","Home",new{@class= "btn btn-sm btn-danger"})
+    </div>
+    <!--Unity End-->
+</div>

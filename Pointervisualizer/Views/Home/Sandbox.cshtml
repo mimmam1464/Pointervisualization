@@ -1,0 +1,26 @@
+﻿@using System.Web.UI.WebControls
+
+@Styles.Render("~/TemplateData/style.css")
+@Scripts.Render("~/Scripts/Build/UnityLoader.js")
+@Scripts.Render("~/TemplateData/UnityProgress.js")
+
+@{
+    ViewBag.Title = "Sandbox";
+}
+
+<h3 style="text-align:center">Sandbox</h3>
+
+<script>
+    var unityInstance = UnityLoader.instantiate("unityContainer", "@Url.Content("~/Scripts/Build/SBOX.json")", { onProgress: UnityProgress });
+</script>
+
+
+
+<!--Unity Starts-->
+<div id="unityContainer" style="background-color: red;">Hello</div>
+<br/>
+<div class="footer">
+    <div class="title">Introduction to Pointers and Addressing</div>
+    <input type="button" value="⛶" onclick="unityInstance.SetFullscreen(1)" class="btn btn-sm btn-default" />
+</div>
+<!--Unity End-->

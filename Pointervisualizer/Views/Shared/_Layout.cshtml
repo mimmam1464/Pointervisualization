@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Pointer Visualizer</title>
+
+    <link href="~/TemplateData/style.css" rel="stylesheet" />
+    <script src="~/TemplateData/UnityProgress.js"></script> @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="mySidebar" class="sidebar">
+    @Html.ActionLink("Home", "Index", "Home")
+    <ul>
+        <li>@Html.ActionLink("Lesson 1: Introduction to Pointers", "Chapter1", "Home")</li>
+
+        <li>@Html.ActionLink("Lesson 2: Pointer Initialization and Operations", "Chapter2", "Home", new {pageName = "noTest"})</li>
+        <li>@Html.ActionLink("Lesson 3: Pointer Arithmetic", "Chapter3", "Home", new {pageName = "noTest"})</li>
+
+        <li>@Html.ActionLink("Lesson 4: Pointers and Strings", "Chapter4", "Home", new {pageName = "noTest"})</li>
+
+        <li>@Html.ActionLink("Lesson 5: Dynamic Memory and Object Pointers", "Chapter5", "Home", new {pageName = "noTest"})</li>
+
+        <li>@Html.ActionLink("Lesson 6: Multidimensional Arrays and Pointers", "Chapter6", "Home", new {pageName = "noTest"})</li>
+
+        <li>@Html.ActionLink("Lesson 7: Null Pointers and Undefined Behavior", "Chapter7", "Home", new {pageName = "noTest"})</li>
+
+        @*<li>@Html.ActionLink("Sandbox", "Sandbox", "Home", new {pageName = "noTest"})</li>*@
+    </ul>
+    @* @Html.ActionLink("About", "About", "Home") *@
+</div>
+<div id="main" style="margin-left: 180px;">
+    @*<button class="openbtn" onclick="openNav()">☰</button>*@
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2020 - Pointer Visualizer. Powered By WebGL and Unity. The tool was built as part of senior project in University of Florida for Fall 2020.</p>
+        </footer>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
+
+</body>
+<script type="text/javascript">
+
+    var can = document.getElementById('unityContainer');
+    if (can) {
+        //console.log(window.innerWidth)
+
+        var _width = window.innerWidth * (0.7);
+        //_width.replace("%", '');
+        //_width = parseInt(_width);
+        console.log(_width);
+        var _height = _width * (9 / 16);
+        can.style.width = _width + "px";
+        can.style.height = _height + "px";
+    }
+   
+</script>
+</html>

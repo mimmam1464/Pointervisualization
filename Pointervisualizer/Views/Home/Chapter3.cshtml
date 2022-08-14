@@ -1,0 +1,79 @@
+﻿@using System.Web.UI.WebControls
+
+@Styles.Render("~/TemplateData/style.css")
+@Scripts.Render("~/Scripts/Build/UnityLoader.js")
+@Scripts.Render("~/TemplateData/UnityProgress.js")
+
+@{
+    ViewBag.Title = "Lesson 3";
+}
+
+<h2>Lesson 3: Pointer Arithmetic</h2>
+
+<script>
+    var unityInstance = UnityLoader.instantiate("unityContainer", "@Url.Content("~/Scripts/CH3Build/CH3.json")", { onProgress: UnityProgress });
+</script>
+
+<div class="container-fluid">
+
+    <p style="max-width: 960px">
+        As you may know, pointers in C++ point to a location in memory. While these locations are usually the exact address of a variable, they can be
+        incremented and decremented to change the address they point to:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">int num = 10;</li>
+            <li class="bulletColors">int * pointer1 = &num;</li>
+            <li class="bulletColors">pointer1++;</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        In this example, <b>pointer1++</b> would add 4 to the current address pointed to by <b>pointer1</b> and make the pointer point to this new address.
+        This is because integers take up 4 bytes in memory, and arithmetic operations on pointers change the value by the size of the data they point to.
+    </p>
+
+    <p style="max-width: 960px">
+        Arithmetic operations can be done in conjucntion with dereferencing. However, artithmetic operations take precedence over the dereference operation.
+        This leads to variations in outcome based on where the arithmetic symbols and dereference symbol is placed.
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">*pointer1++; <i>//post-increment</i> </li>
+            <li class="bulletColors">*++pointer1; <i>//pre-increment</i> </li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        In the first line, <b>pointer1</b> is incremented to point to the next address in memory and the unincremented address is dereferenced. In the second line,
+        the pointer is incremented and the value of the incremented address is dereferenced. This is because line 1 is a post-increment and the evaluated value
+        references the original value of <b>pointer1</b>, while line 2 is a pre-increment and the evaluated value <b>pointer1</b> references the new address.
+    </p>
+
+    <p style="max-width: 960px"> The other two scenarios are: </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">--(*pointer1); <i>//pre-decrement</i> </li>
+            <li class="bulletColors">(*pointer1)--; <i>//post-decrement</i> </li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        These examples dereference <b>pointer1</b> before the arithmetic operations. They would result in the same value, with the only difference being that
+        the first line is a pre-decrement while the second line is a post-decrement. 
+    </p>
+
+
+    <!--Unity Starts-->
+    <div id="unityContainer" style="background-color: red;">Hello</div>
+    <br/>
+    <div class="footer">
+        <div class="title">Introduction to Pointers and Addressing</div>
+        <input type="button" value="⛶" onclick="unityInstance.SetFullscreen(1)" class="btn btn-sm btn-default" />
+        @Html.ActionLink("NEXT","Chapter4","Home",new{@class= "btn btn-sm btn-danger"})
+    </div>
+    <!--Unity End-->
+</div>

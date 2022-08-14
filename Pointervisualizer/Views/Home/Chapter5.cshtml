@@ -1,0 +1,130 @@
+﻿@using System.Web.UI.WebControls
+
+@Styles.Render("~/TemplateData/style.css")
+@Scripts.Render("~/Scripts/Build/UnityLoader.js")
+@Scripts.Render("~/TemplateData/UnityProgress.js")
+
+@{
+    ViewBag.Title = "Lesson 5";
+}
+
+<h2>Lesson Five: Dynamic Memory and Object Pointers</h2>
+
+<script>
+    var unityInstance = UnityLoader.instantiate("unityContainer", "@Url.Content("~/Scripts/CH5Build/CH5.json")", { onProgress: UnityProgress });
+</script>
+
+<div class="container-fluid">
+
+    <p style="max-width: 960px">
+        Variables in C++ can be stored in either the stack or the heap. Stack memory is small and cheap, and is automatically allocated and deallocated. Each
+        function call has a stack frame and variables allocated on that stack are no longer usable once it falls out of scope. On the other hand, heap memory
+        is large and variables allocated on the heap are accessible throught a program. However, variables allocated on the heap must be manually deallocated.
+    </p>
+
+    <p style="max-width: 960px"> Memory is allocated on the heap using the <b>"new"</b> keyword.</p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">int myArray[10]; <i>//Allocated on the stack.</i> </li>
+            <li class="bulletColors">int *ptr = new int[10]; <i>//Allocated on the heap.</i> </li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        This also extends to objects, and allocating on the heap is fairly common for objects. Let's say we had some class <b>myClass</b> in a program. An
+        instance of this class could then be created on the heap as:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">myClass * myPtr = new myClass;</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        Keep in mind that myClass* is just a data type such as int* or char* and <b>myPtr</b> can point to any instance of myClass.
+    </p>
+
+    <p style="max-width: 960px">
+        Objects usually have member variables and functions, and these can also be accessed through a pointer to an object. For example, if <b>myClass</b>
+        had a public integer member variable called <b>"number"</b>, this member variable could be accessed as follows:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">myClass classObj;</li>
+            <li class="bulletColors">myClass * myPtr = &classObj;</li>
+            <li class="bulletColors">cout << classObj.number;</li>
+            <li class="bulletColors">cout << myPtr->number;</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        Note that in order to access member variables through a pointer, we have to use the specialized <b>-></b> operator.
+    </p>
+
+    <p style="max-width: 960px">
+        An object can also have a pointer to another object as a member variable. This can create a chain of objects, all of which are accessible from one
+        "head" pointer. Let's say that myClass also had some public member variable <b>"nextObj"</b> of type myClass*. With this, the following example
+        becomes possible:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">myClass obj1 = new myClass;</li>
+            <li class="bulletColors">myClass obj2 = new myClass;</li>
+            <li class="bulletColors">myClass * objPtr = &obj1;</li>
+            <li class="bulletColors">objPtr->nextObj = obj2; <i>//Pointer to second object.</i> </li>
+            <li class="bulletColors">cout << objPtr->nextObj->number; <i>//Accessing "number" variable of second object.</i></li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        With this, we are pointing to <b>obj2</b> from <b>obj1</b>, and accessing a value from <b>obj2</b> with a pointer to <b>obj1</b>. This chain can
+        be continued by pointing to more instances of <b>myClass</b> creating an important data structure called a "linked list".
+    </p>
+
+    <p style="max-width: 960px">
+        Lastly, we have to deallocate the memory we allocate on the heap once we are finished using it. This is done with the <b>delete</b> keyword. As a rule
+        of thumb, if something was allocated with <b>new</b>, it has to be deallocated with <b>delete</b>. To delete everything we have allocated so far:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">delete ptr;</li>
+            <li class="bulletColors">delete myPtr;</li>
+            <li class="bulletColors">delete obj1;</li>
+            <li class="bulletColors">delete obj2;</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        Keep in mind that some memory can only be accessed through a pointer and has no named reference. The following is an example of such a scenario and how
+        we would deallocate the memory in that scenario:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">myClass * ptr2 = new myClass</li>
+            <li class="bulletColors">ptr2->nextObj = new myClass;</li>
+            <li class="bulletColors">delete ptr2->nextObj;</li>
+            <li class="bulletColors">delete ptr2;</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        If we just deleted <b>ptr2</b>, we could no longer access the memory allocated for its <b>nextObj</b> member object. Thus, we must delete newly allocated
+        memory that can only be accessed with a pointer before deleting the pointer itself.
+    </p>
+
+    <!--Unity Starts-->
+    <div id="unityContainer" style="background-color: red;">Hello</div>
+    <br/>
+    <div class="footer">
+        <div class="title">Introduction to Pointers and Addressing</div>
+        <input type="button" value="⛶" onclick="unityInstance.SetFullscreen(1)" class="btn btn-sm btn-default" />
+        @Html.ActionLink("NEXT","Chapter6","Home",new{@class= "btn btn-sm btn-danger"})
+    </div>
+    <!--Unity End-->
+</div>

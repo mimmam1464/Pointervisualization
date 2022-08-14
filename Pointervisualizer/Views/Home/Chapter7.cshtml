@@ -1,0 +1,95 @@
+﻿@using System.Web.UI.WebControls
+
+@Styles.Render("~/TemplateData/style.css")
+@Scripts.Render("~/Scripts/Build/UnityLoader.js")
+@Scripts.Render("~/TemplateData/UnityProgress.js")
+
+@{
+    ViewBag.Title = "Lesson 7";
+}
+
+    <h2>Lesson 7: Null Pointers and Undefined Behavior</h2>
+
+    <script>
+    var unityInstance = UnityLoader.instantiate("unityContainer", "@Url.Content("~/Scripts/CH7Build/CH7.json")", { onProgress: UnityProgress });
+    </script>
+
+<div class="container-fluid">
+
+    <p style="max-width: 960px">
+        There are a variety of pointer operations in C++ that can return undefined or unexpected behavior. Some of these cases stem from unintialized
+        variables or pointers. For example:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">int var1;</li>
+            <li class="bulletColors">int * ptr = &var1;</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        This is a very basic operation and the pointer currently points to the address of var1. However, just because var1 exists in memory does not
+        mean that it contains a valid value. In this case, dereferencicng <b>ptr</b> would cause an undefined value error. A similar example of
+        dereferencing an invalid value would be:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">int var2 = 10, var3 = 15;</li>
+            <li class="bulletColors">int * ptr = &var2;</li>
+            <li class="bulletColors">*(ptr++);</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        This arithmetic operation would increment the address that <b>ptr</b> points to and deference this new address. However, this address can contain
+        a variety of values and may not be readable through our dereference operation. Additionally, even though var2 and var3 were declared/initialized
+        one after the other, their addresses are unrelated and not contigous as in an array. 
+    </p>
+
+    <p style="max-width: 960px"> 
+        When a pointer is unintialized, it can be pointing to any location in memory and thus, contains garbage data that we cannot use. To explicitly
+        point a pointer to "nothing", we point it to <b>nullptr</b>:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors"> ptr = nullptr; </li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        Unlike unintialized pointers, null pointers can actually be checked and compared. Two null pointers are considered to be equal. However, dereferencing
+        a null pointer would still cause an error, as null pointers do not point to a valid value.
+    </p>
+
+    <p style="max-width: 960px">
+        Lastly, pointers cannot point to invalid data types and const pointers/variables cannot point to other pointers/variables at all. For example:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors"> int intVar = 10; </li>
+            <li class="bulletColors"> int intVar2 = 20; </li>
+            <li class="bulletColors"> char * charPtr = &intVar; </li>
+            <li class="bulletColors"> const int * intPtr = &intVar; </li>
+            <li class="bulletColors"> intPtr = &intVar2; </li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        In the case of the char pointer, charPtr is only allowed to point to char values, and would cause an error. As for the int pointer, it is protected
+        with the const keyword, meaning that it cannot be modified. Pointing intPtr to a different value is a modification, which would cause an error.
+    </p>
+
+    <!--Unity Starts-->
+    <div id="unityContainer" style="background-color: red;">Hello</div>
+    <br/>
+    <div class="footer">
+        <div class="title">Introduction to Pointers and Addressing</div>
+        <input type="button" value="⛶" onclick="unityInstance.SetFullscreen(1)" class="btn btn-sm btn-default" />
+        @Html.ActionLink("NEXT","Sandbox","Home",new{@class= "btn btn-sm btn-danger"})
+    </div>
+    <!--Unity End-->
+</div>

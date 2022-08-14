@@ -1,0 +1,72 @@
+﻿@using System.Web.UI.WebControls
+
+@Styles.Render("~/TemplateData/style.css")
+@Scripts.Render("~/Scripts/Build/UnityLoader.js")
+@Scripts.Render("~/TemplateData/UnityProgress.js")
+
+@{
+    ViewBag.Title = "Lesson 4";
+}
+
+<h2>Lesson 4: Pointers and Strings</h2>
+
+<script>
+    var unityInstance = UnityLoader.instantiate("unityContainer", "@Url.Content("~/Scripts/CH4Build/CH4.json")", { onProgress: UnityProgress });
+</script>
+
+<div class="container-fluid">
+
+    <p style="max-width: 960px">
+        C++ strings are just arrays of const chars followed by a null-terminating character. This null-terminating character is <b>'/0'</b>, and it represents the
+        end of the string. The size of a string is also found by searching for the first instance of a null-terminating character in the string. The following lines
+        of code are functionally equivalent:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">const char * myChars = "test";</li>
+            <li class="bulletColors">string myString = "test";</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        In memory, both of these variables are stored like so:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">[ 't' ];</li>
+            <li class="bulletColors">[ 'e' ];</li>
+            <li class="bulletColors">[ 's' ];</li>
+            <li class="bulletColors">[ 't' ];</li>
+            <li class="bulletColors">[ '/0' ];</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px"> 
+        As with any array, the address of our const char array is its first element. In other words, dereferencing <b>myChars</b> would access the char 't'.
+        However, this can be changed through pointer arithmetic. To accesst the letter 's' in our array, we could do:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">*(myChars + 2)</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        This increments the address <b>myChars</b> points to by two and then accesses the value at that memory address. It accesses the same line as the line
+        <b>myChars[2]</b>. Keep in mind that dereferencing <b>myChars</b> now would access the char <b>'e'</b>. These chars can be accessed but not modified, as our
+        array is protected by the const keyword.
+    </p>
+
+    <!--Unity Starts-->
+    <div id="unityContainer" style="background-color: red;">Hello</div>
+    <br/>
+    <div class="footer">
+        <div class="title">Introduction to Pointers and Addressing</div>
+        <input type="button" value="⛶" onclick="unityInstance.SetFullscreen(1)" class="btn btn-sm btn-default" />
+        @Html.ActionLink("NEXT","Chapter5","Home",new{@class= "btn btn-sm btn-danger"})
+    </div>
+    <!--Unity End-->
+</div>

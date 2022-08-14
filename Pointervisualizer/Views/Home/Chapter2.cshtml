@@ -1,0 +1,84 @@
+﻿@using System.Web.UI.WebControls
+
+@Styles.Render("~/TemplateData/style.css")
+@Scripts.Render("~/Scripts/Build/UnityLoader.js")
+@Scripts.Render("~/TemplateData/UnityProgress.js")
+
+@{
+    ViewBag.Title = "Lesson 2";
+}
+
+<h2>Lesson 2: Pointer Initialization and Operations</h2>
+
+<script>
+    var unityInstance = UnityLoader.instantiate("unityContainer", "@Url.Content("~/Scripts/CH2Build/CH2.json")", { onProgress: UnityProgress });
+</script>
+
+<div class="container-fluid">
+
+    <p style="max-width: 960px">
+        As we have seen in lesson 1, we can access and modify the value a pointer points to by dereferencing the pointer. By changing the variable a
+        pointer points to, we can use one pointer to modify multiple values:
+    </p>
+
+    @*<p style="max-width: 960px"> The symbol “&” can be used to find the address of a variable. For instance: </p>*@
+
+    <ul>
+        <b>
+            <li class="bulletColors">int var1;</li>
+            <li class="bulletColors">int var2;</li>
+            <li class="bulletColors">int * ptr;</li>
+            <li class="bulletColors">ptr = &var1;</li>
+            <li class="bulletColors">*ptr = 5;</li>
+            <li class="bulletColors">ptr = &var2;</li>
+            <li class="bulletColors">*ptr = 10;</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        When <b>var1</b> and <b>var2</b> are created, they are not storing a value. If we tried to access the value, we would get an error.
+        However, we can still point to their address and modify the value of the variables as shown above.
+    </p>
+
+    <p style="max-width: 960px"> We can also have multiple pointers pointing to one variable.</p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">int var3 = 10;</li>
+            <li class="bulletColors">int * ptr1 = &var3;</li>
+            <li class="bulletColors">int * ptr2 = &var3;</li>
+            <li class="bulletColors">int * ptr3 = &var3;</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        Dereferencing any of these pointers would access the value of <b>var3</b>. Additionally, if we change the value of <b>var3</b> in any way, the
+        change will be reflected across all pointers pointing to <b>var3</b>:
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">var3 = 15;</li>
+            <li class="bulletColors">*ptr1 = 20;</li>
+            <li class="bulletColors">*ptr2 = 25;</li>
+            <li class="bulletColors">*ptr3 = 30;</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        Each of the above lines change the value of <b>var3</b>. The current value of <b>var3</b> is 30 and this would be the result if any of the pointers
+        were dereferenced. Keep in mind that pointers point to the address of a variable and not its value. Even though the value has changed, the variable
+        pointed to is the same.
+    </p>
+
+
+    <!--Unity Starts-->
+    <div id="unityContainer" style="background-color: red;">Hello</div>
+    <br/>
+    <div class="footer">
+        <div class="title">Pointer Initialization and Operations</div>
+        <input type="button" value="⛶" onclick="unityInstance.SetFullscreen(1)" class="btn btn-sm btn-default" />
+        @Html.ActionLink("NEXT","Chapter3","Home",new{@class= "btn btn-sm btn-danger"})
+    </div>
+    <!--Unity End-->
+</div>

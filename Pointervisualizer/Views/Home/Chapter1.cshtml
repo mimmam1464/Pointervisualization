@@ -1,0 +1,101 @@
+﻿@using System.Web.UI.WebControls
+
+@Scripts.Render("~/Scripts/Build/UnityLoader.js")
+@Scripts.Render("~/TemplateData/UnityProgress.js")
+
+@{
+    ViewBag.Title = "Lesson 1";
+}
+
+<h2>Lesson 1: Introduction to Pointers</h2>
+
+<script>
+    var unityInstance = UnityLoader.instantiate("unityContainer", "@Url.Content("~/Scripts/CH1Build/CH1.json")", { onProgress: UnityProgress });
+</script>
+
+<div class="container-fluid">
+
+    <p style="max-width: 960px">
+        In C++, data such as objects and variables are stored in memory that can be identified and addressed.
+        While these addresses are randomly decided at runtime, they can be referenced to access the object or variable stored at that location in memory.
+    </p>
+
+    <p style="max-width: 960px"> The symbol “&” can be used to find the address of a variable. For instance: </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">var1 = 5;</li>
+            <li class="bulletColors">var2 = &var1;</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px"> In the above code example, <b>var1</b> is randomly stored at an address in memory, and <b>var2</b> contains that address where <b>var1</b> is stored. </p>
+
+    <p style="max-width: 960px"> The reverse can also be done through <ins>de-referencing</ins>, which is done with the “*” symbol. </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors">var3 = *var2;</li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px"> With this, <b>var3</b> now contains the value stored at <b>var2</b>, which is 5. </p>
+
+    <p style="max-width: 960px"> The “*” symbol is also used to create pointers as shown below: </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors"> int * pointer1; </li>
+            <li class="bulletColors"> pointer1 = &var3; </li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        This new variable, <b>pointer1</b>, is a pointer variable and it contains the address of <b>var3</b>.
+        We can also create pointers to store the addresses of other variable types as shown in the following lines.
+    </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors"> char * charPtr; </li>
+            <li class="bulletColors"> float * floatPtr; </li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px">
+        An int, a float, and a char are all data types of different sizes and take up a different amount of bytes in memory. However, all pointers
+        take up the same amount of space in memory regardless of the data type they point to (4 bytes in 32-bit systems, 8 bytes in 64-bit systems).
+        Keep in mind that these pointers are different data types and can only point to their respective data type.
+    </p>
+
+    <p style="max-width: 960px"> By de-referencing pointers, you can access or change the value of the variable they point to: </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors"> *pointer1 = 10; </li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px"> Dereferencing <b>pointer1</b> accesses the value it points to, which is <b>var3</b>, and changes the value of <b>var3</b> to 10 (var3 was previously 5). </p>
+
+    <p style="max-width: 960px"> Rather than just declaring empty pointers, you can initialize them to a pre-existing variable on declaration: </p>
+
+    <ul>
+        <b>
+            <li class="bulletColors"> int * pointer1 = &var3; </li>
+        </b>
+    </ul>
+
+    <p style="max-width: 960px"> This is equivalent to the previous declaration of <b>pointer1</b> and can be done with the address of any pre-existing int variable besides <b>var3</b>. </p>
+    
+    <!--Unity Starts-->
+    <div id="unityContainer" style="background-color: red;">Hello</div>
+    <br/>
+    <div class="footer">
+        <div class="title">Introduction to Pointers and Addressing</div>
+        <input type="button" value="⛶" onclick="unityInstance.SetFullscreen(1)" class="btn btn-sm btn-default" />
+        @Html.ActionLink("NEXT","Chapter2","Home",new{@class= "btn btn-sm btn-danger"})
+    </div>
+    <!--Unity End-->
+</div>
+
